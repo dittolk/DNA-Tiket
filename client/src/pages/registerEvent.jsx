@@ -1,13 +1,13 @@
 import { Text } from "@chakra-ui/react";
 import NavBar from "../components/navbar";
 import Footer from "../components/footer";
-import RegisterEventForm from "../components/registerEventForm";
+import RegisterEventForm from "../components/registerEventForm/registerEventForm";
 
 function RegisterEvent() {
     return(
         <>
             <NavBar></NavBar>
-            <RegisterEventForm></RegisterEventForm>
+            <RegisterEventForm ></RegisterEventForm>
             <Footer></Footer>
         </>
     )

@@ -1,54 +1,53 @@
-import { Box, Button, Flex, Image, Img, Input, Stack, Text, useMediaQuery } from "@chakra-ui/react";
-import { useState } from "react";
-import { Login } from "./login";
-import Register from "./register";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Box, Button, Flex, Image, Input, useMediaQuery, HStack, InputGroup, InputLeftElement, Text } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import navimg from "../asset/tugas2.jpg" 
+import { Search2Icon } from '@chakra-ui/icons'
+import { RxDashboard } from 'react-icons/rx';
+import { RiCompassDiscoverLine } from 'react-icons/ri';
+import { BsCalendar2Plus } from 'react-icons/bs';
 
 function NavBar(){
-    
-    const [coba, setCoba] = useState(0);
+    const token = localStorage.getItem("token");
     const [isSmallerScreen] = useMediaQuery("(max-width: 30em)");
-    const navigate = useNavigate()
-
-    const handleLogout = () => {
-
+    const handleLogout = () =>{
+        localStorage.removeItem('token');
+        window.location.reload();
     }
-
-    const handleProfile = () => {
-        
-    }
-
-    const handleDashboard = () => {
-        
-    }
-
-    const handleLogin = () => {
-        navigate("/registerUser");
-    }
-
-    const handleRegister = () =>{
-
-    }
-
     return(
         <Flex w={'100%'}>
-            <Box bg={'#020091'} w={'100%'} color='white' padding="1.2rem" borderBottom="1px solid black" boxShadow='0px 4px 2px -2px rgba(0, 0, 0, 0.2)' alignItems={'center'}>
+            <Box bg={'#020091'} w={'100%'} color='white' padding="1.2rem" borderBottom="1px solid black" boxShadow='lg' alignItems={'center'}>
                 <Flex justifyContent="space-between" alignItems={'center'}>
-                <Image src={navimg} w="200px" h="30px" alt="Logo DNA Tiket"/>
-                    {/* <Text fontSize={{ base: "xs", lg: "md" }}>DNA Tickets</Text> */}
-                    {/* <Button bg={'rgb(67, 204, 246)'} _hover={{bg: 'blue.500',}} color={'white'} onClick={handleDashboard}>Dashboard</Button> */}
-                    {isSmallerScreen ? (
-                        <Button bg="rgb(255, 150, 45)" size={{ base: "sm", lg: "md" }} _hover={{ bg: "blue.500" }} color={"white"}>
-                            Search Event
-                        </Button>
+                <Link to={'/'}><Image src={navimg} w="200px" h="30px" alt="Logo DNA Tiket"/></Link>
+                    {isSmallerScreen ? (                        
+                        <></>
                     ) : (
-                        <Input size={{ base: "sm", lg: "md" }} bg={"gray.100"} placeholder="Search events" w={"50%"} />
+                        <HStack w={'50vw'} justifyContent={'center'} alignItems={'center'}>
+                            <InputGroup ml={'100px'}>
+                                <InputLeftElement pointerEvents='none'>
+                                <Search2Icon color='gray.400' />
+                                </InputLeftElement>
+                                <Input rounded={'lg'} size={{ base: "sm", lg: "md" }} bg={"gray.200"} color={'black'} placeholder="Jelajahi event" 
+                                _hover={{
+                                    shadow: 'xl',
+                                  }} />
+                            </InputGroup>        
+                        </HStack>
                     )}
                     <Flex flexDirection={'row'}>
-                        <Button mr={"2"} variant='outline'color={"white"} _hover={{}}><Link to="/registerUser">Daftar</Link></Button>
-                        <Button><Link to="/loginUser">Masuk</Link></Button>
-                         </Flex>
+                        {token ? 
+                        <>
+                            <Link to="/register_event"><Button mr={"2"} variant='outline'color={"white"} _hover={{}}><BsCalendar2Plus/><Text ml={2}>Buat event</Text></Button></Link>
+                            <Link to="/discover_event"><Button mr={"2"} variant='outline'color={"white"} _hover={{}}><RiCompassDiscoverLine/><Text ml={2}>Cari event</Text></Button></Link>
+                            <Link to="/dashboard"><Button mr={"2"} variant='outline'color={"white"} _hover={{}}><RxDashboard/><Text ml={2}>Dashboard</Text></Button></Link>
+                            <Button colorScheme="red" onClick={handleLogout}>Logout</Button>
+                        </> 
+                        : 
+                        <>
+                            <Link to="/discover_event"><Button mr={"2"} variant='outline'color={"white"} _hover={{}}><RiCompassDiscoverLine/><Text ml={2}>Cari event</Text></Button></Link>
+                            <Link to="/register_user"><Button mr={"2"} variant='outline'color={"white"} _hover={{}}>Daftar</Button></Link>
+                            <Link to="/login_user"><Button>Masuk</Button></Link>
+                        </>}
+                    </Flex>
                 </Flex>
             </Box>
         </Flex>

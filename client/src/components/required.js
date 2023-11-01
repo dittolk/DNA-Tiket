@@ -1,11 +1,11 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 function Required() {
-    const id = localStorage.getItem("id");
+    const token = localStorage.getItem("token");
     return(
         <>
         {
-            id ? <Outlet></Outlet> : <Navigate to='/'/>
+            token ? <Outlet></Outlet> : <Navigate to='/'/>
         }
         </>
     )
