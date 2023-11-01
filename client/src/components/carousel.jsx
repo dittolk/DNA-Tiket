@@ -56,11 +56,13 @@ export default function Carousel() {
         {/* Left Icon */}
         <IconButton
           aria-label="left-arrow"
-          colorScheme="messenger"
+          color={'white'}
+          bgColor={'#020091'}
           borderRadius="full"
           position="absolute"
           left={side}
           top={top}
+          _hover={{bgColor:'red'}}
           transform={'translate(0%, -50%)'}
           zIndex={2}
           onClick={() => slider?.slickPrev()}>
@@ -69,7 +71,9 @@ export default function Carousel() {
         {/* Right Icon */}
         <IconButton
           aria-label="right-arrow"
-          colorScheme="messenger"
+          color={'white'}
+          bgColor={'#020091'}
+          _hover={{bgColor:'red'}}
           borderRadius="full"
           position="absolute"
           right={side}

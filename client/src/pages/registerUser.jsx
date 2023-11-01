@@ -22,7 +22,7 @@ import loginimage from "../asset/tugas1.png";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 
 function RegisterUser() {
   const RegisterSchema = Yup.object().shape({
@@ -43,8 +43,9 @@ function RegisterUser() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const toast = useToast();
   const handleSubmitRegister = async (data) => {
+    console.log(data);
     try {
-      // const response = await axios.post("http://localhost:2000/users", data);
+      const response = await axios.post("http://localhost:2000/user/register-user", data);
       toast({
         title: "Akun Telah Dibuat",
         description: "Anda sekarang dapat menggunakan akun Anda.",
@@ -77,7 +78,7 @@ function RegisterUser() {
           </Stack>
 
           <Formik
-            initialValues={{ nama: "", email: "", password: "" }}
+            initialValues={{ name: "", username: "", email: "", password: "" }}
             validationSchema={RegisterSchema}
             onSubmit={(values, action) => {
               handleSubmitRegister(values);
@@ -103,6 +104,7 @@ function RegisterUser() {
                                 {...field}
                                 type="text"
                                 placeholder="Nama Lengkap"
+                                autoComplete="off"
                               />
                             )}
                           </Field>
@@ -122,6 +124,7 @@ function RegisterUser() {
                                 {...field}
                                 type="text"
                                 placeholder="Username"
+                                autoComplete="off"
                               />
                             )}
                           </Field>
@@ -141,6 +144,7 @@ function RegisterUser() {
                               {...field}
                               type="email"
                               placeholder="Email"
+                              autoComplete="off"
                             />
                           )}
                         </Field>
@@ -159,6 +163,7 @@ function RegisterUser() {
                                 {...field}
                                 placeholder="Password"
                                 type={showPassword ? "text" : "password"}
+                                autoComplete="off"
                               />
                             )}
                           </Field>
@@ -188,6 +193,7 @@ function RegisterUser() {
                                 {...field}
                                 placeholder="Konfirmasi Password"
                                 type={showConfirmPassword ? "text" : "password"}
+                                autoComplete="off"
                               />
                             )}
                           </Field>
@@ -224,6 +230,7 @@ function RegisterUser() {
                                 {...field}
                                 type="text"
                                 placeholder="Kode Referral"
+                                autoComplete="off"
                               />
                             )}
                           </Field>
@@ -237,9 +244,7 @@ function RegisterUser() {
                           loadingText="Submitting"
                           size="lg"
                           color={"white"}
-                          _hover={{
-                            bg: "blue.500",
-                          }}
+                          _hover={{}}
                         >
                           Daftar
                         </Button>
@@ -247,7 +252,7 @@ function RegisterUser() {
                       <Stack pt={6}>
                         <Text align={"center"}>
                           Apakah sudah punya Akun?{" "}
-                          <Text as={Link} to="/loginUser" color={"blue.400"}>Masuk</Text>
+                          <Text as={Link} to="/login_user" color={"blue.400"}>Masuk</Text>
                         </Text>
                       </Stack>
                     </Stack>

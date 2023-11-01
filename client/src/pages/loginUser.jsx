@@ -4,7 +4,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Button,
   Heading,
@@ -12,13 +11,14 @@ import {
   useColorModeValue,
   Image,
   useToast,
-  Toast,
 } from "@chakra-ui/react";
 import loginimage from "../asset/tugas1.png";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import { setData } from "../redux/userSlice";
+import { useDispatch } from "react-redux";
 
 export default function LoginUser() {
   const LoginSchema = Yup.object().shape({
@@ -31,40 +31,30 @@ export default function LoginUser() {
   });
 
   const toast = useToast();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleSubmitLogin = async (data_input_property) => {
+  const handleSubmitLogin = async (data) => {
     try {
-      // const response = await axios.get(
-      //   `http://localhost:2000/users?email=${data_input_property.email}&password=${data_input_property.password}`,
-      //   data_input_property
-      // );
-      // if (response.data.length == 1) {
-      //   dispatch(setData(response.data[0]));
-      //   localStorage.setItem("id", response.data[0]?.id); //? ngecek ada ga indeks ke 0, kalau ada ambil id
-      //   window.location.reload();
-      // } else {
-      //   toast({
-      //     title: "Sorry",
-      //     description: "Email or Password is wrong. Please try again.",
-      //     status: "error",
-      //     duration: 5000,
-      //     isClosable: true,
-      //     position: "top",
-      //   });
-      // }
-
-      Toast({
-        title: "Behasil Masuk",
-        description: "Kamu Berhasil Masuk.",
-        status: "sukses",
-        duration:5000,
-        isClosable: true,
-        position: "top",
-      });
-
+      const response = await axios.get(
+        `http://localhost:2000/user/user-login?email=${data.email}&password=${data.password}`, data);
+      if (response.data.token) {
+        dispatch(setData(response.data.userLogin));
+        localStorage.setItem("token", response.data.token);
+        navigate('/');
+        // window.location.reload();
+      } else {
+        toast({
+          title: "Sorry",
+          description: "Email or Password is wrong. Please try again.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+      }
     } catch (err) {
       console.log(err);
-
       toast({
         title: "Login Gagal",
         description: "Email atau password salah. Silakan coba lagi.",
@@ -73,9 +63,7 @@ export default function LoginUser() {
         isClosable: true,
         position: "top", 
       });
-
     }
-    
   };
 
   return (
@@ -158,16 +146,14 @@ export default function LoginUser() {
                           Belum punya akun? {" "}
                           </Text>
                           <Text>
-                          <Text as={Link} to="/registerUser" color={"blue.400"}>Daftar</Text>
+                          <Text as={Link} to="/register_user" color={"blue.400"}>Daftar</Text>
                         </Text>
                           </Stack>
                           <Button
                             type="submit"
                             bgGradient="linear(to-r, #000000, rgb(16, 69, 181))"
                             color={"white"}
-                            _hover={{
-                              bg: "blue.500",
-                            }}
+                            _hover={{}}
                           >
                             Masuk
                           </Button>
