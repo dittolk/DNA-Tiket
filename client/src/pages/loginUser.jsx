@@ -19,12 +19,13 @@ import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import { setData } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 export default function LoginUser() {
   const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid address format")
-      .required("Email is required"),
+    // email: Yup.string()
+    //   .email("Invalid address format")
+    //   .required("Email is required"),
     password: Yup.string()
       .min(3, "Password must be 3 characters at minimum")
       .required("Password is required"),
@@ -36,24 +37,47 @@ export default function LoginUser() {
 
   const handleSubmitLogin = async (data) => {
     try {
-      const response = await axios.get(
-        `http://localhost:2000/user/user-login?email=${data.email}&password=${data.password}`, data);
-      if (response.data.token) {
-        dispatch(setData(response.data.userLogin));
-        localStorage.setItem("token", response.data.token);
-        navigate('/');
-        // window.location.reload();
-      } else {
-        toast({
-          title: "Sorry",
-          description: "Email or Password is wrong. Please try again.",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-          position: "top",
-        });
-      }
-    } catch (err) {
+      if(data.data_input.includes('@')){
+          data.email = data.data_input
+          delete data.data_input
+          const response = await axios.get(`http://localhost:2000/user/user-login?email=${data.email}&password=${data.password}`, data);
+          if (response.data.token) {
+            dispatch(setData(response.data.userLogin));
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("fr-login", "fr-login");
+            navigate('/');
+            // window.location.reload();
+          } else {
+            toast({
+              title: "Sorry",
+              description: "Email or Password is wrong. Please try again.",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+              position: "top",
+            });
+          }
+        } else {
+          data.username = data.data_input
+          delete data.data_input;
+          const response = await axios.get(`http://localhost:2000/user/user-login?username=${data.username}&password=${data.password}`, data);
+          if (response.data.token) {
+            dispatch(setData(response.data.userLogin));
+            localStorage.setItem("token", response.data.token);
+            navigate('/');
+            // window.location.reload();
+          } else {
+            toast({
+              title: "Sorry",
+              description: "Email or Password is wrong. Please try again.",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+              position: "top",
+            });
+          }
+        }
+    }catch(err) {
       console.log(err);
       toast({
         title: "Login Gagal",
@@ -91,7 +115,7 @@ export default function LoginUser() {
           >
             <Stack spacing={4}>
               <Formik
-                initialValues={{ email: "", password: "" }}
+                initialValues={{ data_input: "", password: "" }}
                 validationSchema={LoginSchema}
                 onSubmit={(values, action) => {
                   handleSubmitLogin(values);
@@ -103,13 +127,13 @@ export default function LoginUser() {
                     <>
                       <Form>
                         <FormControl id="email">
-                          <FormLabel>Email</FormLabel>
-                          <Field name="email">
+                          <FormLabel>Email/Username</FormLabel>
+                          <Field name="data_input">
                             {({ field }) => (
                               <Input
                                 {...field}
-                                type="email"
-                                placeholder="Email"
+                                type="text"
+                                placeholder="Email/Username"
                               />
                             )}
                           </Field>

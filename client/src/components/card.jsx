@@ -3,24 +3,35 @@ import {
     Heading,
     Text,
     Stack,
-    Flex,
     useColorModeValue,
     Image,
+    Button,
   } from '@chakra-ui/react'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function EventCard() {
+  const navigate = useNavigate();
+
+    const handleBeliTiket = (id) => {
+      console.log(id);
+      navigate(`/event_detail/${id}`)
+    }
+
     const eventList = [
         {
+            id: 1,
             eventName: "Event 1",
             eventStart: "27 Dec 2023",
             ticketPrice: 50000
         },
         {
+            id: 2,
             eventName: "Event 2",
             eventStart: "22 Nov 2023",
             ticketPrice: 22000
         },
         {
+            id: 3,
             eventName: "Event 3",
             eventStart: " 9 Sept 2023",
             ticketPrice: 27000
@@ -29,7 +40,6 @@ export default function EventCard() {
 
     return (
         <>
-        <Flex py={6} overflowX={{ base: "scroll", md: "scroll", lg : "scroll", xl: "hidden" }} justifyContent={{ base: null, md: "center" }}>
           {eventList.map((item, index) =>(
               <Box
               maxW={{ base: '200px', md: '370px'}}
@@ -70,11 +80,11 @@ export default function EventCard() {
                 </Text>
                 <Text color={'gray.500'} fontSize={['xs','sm']}>
                   {item.ticketPrice}
-                </Text>
+                </Text>                
               </Stack>
+              <Button onClick={() => handleBeliTiket(item.id)}>Beli tiket</Button>
             </Box>
           ))} 
-      </Flex>
         </>
     )
 }

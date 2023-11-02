@@ -2,6 +2,7 @@
 
 import {
   Center,
+  Flex,
   Heading,
 } from '@chakra-ui/react'
 import EventCard from './card'
@@ -16,7 +17,9 @@ export default function EventContentRecent() {
       </Heading>
     </Center>
     
-    <EventCard></EventCard>
+    <Flex py={6} overflowX={{ base: "scroll", md: "scroll", lg : "scroll", xl: "hidden" }} justifyContent={{ base: null, md: "center" }}>
+      <EventCard></EventCard>
+    </Flex>
     </>
     
   )

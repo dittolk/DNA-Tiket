@@ -16,7 +16,7 @@ import {
   Image,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import loginimage from "../asset/tugas1.png";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -42,8 +42,10 @@ function RegisterUser() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const toast = useToast();
+  
   const handleSubmitRegister = async (data) => {
     console.log(data);
+    
     try {
       const response = await axios.post("http://localhost:2000/user/register-user", data);
       toast({
