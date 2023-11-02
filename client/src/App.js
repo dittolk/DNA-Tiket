@@ -14,12 +14,15 @@ import Profile from "./components/profile";
 import EventDetail from "./pages/eventDetail";
 
 
+
 const router = createBrowserRouter([
   {path: '/', element: <Home></Home>},
   {path: '/register_user', element:<RegisterUser></RegisterUser>},
   {path: '/login_user', element:<LoginUser></LoginUser>},
   {path: '/discover_event', element:<DiscoverEvent></DiscoverEvent>},
+
   {path: '/event_detail/:id', element:<EventDetail></EventDetail>},
+
   {element: <Required></Required>, children: [
     {path: '/dashboard', element:<Dashboard></Dashboard>},
     {path: '/profile', element:<Profile></Profile>},
@@ -39,7 +42,9 @@ function App() {
             Authorization: `Bearer ${token}`,
           }
         })
+
         // console.log("ini response", response);
+
         dispatch(setData(response.data.user));
     }catch(err){
       console.log(err);
@@ -49,6 +54,7 @@ function App() {
   useEffect(() => {
     keepLogin();
   }, [])
+
 
   return (
     <div className="App">
