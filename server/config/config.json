@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "oursql123#",
+    "password": "Chelsea1905",
     "database": "dnatiket",
     "host": "127.0.0.1",
     "dialect": "mysql"
