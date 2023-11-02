@@ -37,12 +37,25 @@ module.exports = {
     },
     userLogin: async(req, res) => {
         try{
-            const {email, password} = req.query;
-            const userLogin = await User.findOne({
-                where:{
-                    email: email
-                } 
-            })
+            let userLogin;
+            const {password} = req.query;
+
+            if(req.query.email){
+                const {email} = req.query;
+                userLogin = await User.findOne({
+                    where:{
+                        email: email
+                    } 
+                })
+            }else{
+                const {username} = req.query;
+                userLogin = await User.findOne({
+                    where:{
+                        username: username
+                    } 
+                })
+            }
+
             if(userLogin == null){
                 return res.status(409).send({
                     message: 'User not found'

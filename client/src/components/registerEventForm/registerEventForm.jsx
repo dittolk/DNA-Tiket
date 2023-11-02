@@ -16,7 +16,7 @@ import {
   VStack,
   Box,
 } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TimeIcon, EditIcon} from '@chakra-ui/icons'
 import { SlLocationPin } from 'react-icons/sl';
 import { MdEventNote } from 'react-icons/md';
@@ -29,6 +29,7 @@ import DateModal from './subcomponents/dateModal';
 import LocationModal from './subcomponents/locationModal';
 import TabbedContent from './subcomponents/tabbedContent';
 import TicketControl from './subcomponents/ticketControl';
+import { useSelector } from 'react-redux';
 
 const StyledInput = styled(Input)`
   font-weight: normal;
@@ -45,6 +46,7 @@ const OverlayModal = () => (
 )
 
 export default function RegisterEventForm() {
+  const user = useSelector((state) => state.user.value)
   
   //Untuk modal kategori, date, dan lokasi
   const [overlay, setOverlay] = useState(<OverlayModal />) //overlay bakcground untuk modal
@@ -81,25 +83,26 @@ export default function RegisterEventForm() {
   const [isExceedLimit, setIsExceedLimit] = useState(false);
 
   const RegisterEventSchema = Yup.object().shape({
-    namaEvent: Yup.string().required("Nama event tidak boleh kosong"),
+    nama_event: Yup.string().required("Nama event tidak boleh kosong"),
     hargaTiket: Yup.number().required('Harga tiket tidak boleh kosong').positive('Harga tiket harus positif'),
     tanggalMulai: Yup.string().required("Jadwal Event tidak boleh kosong"),
-    formatEvent: Yup.string().required("Format event tidak boleh kosong"),
+    format_event: Yup.string().required("Format event tidak boleh kosong"),
     kuota: Yup.number().required('Kuota tidak boleh kosong').positive('Kuota harus positif'),
     alamat: Yup.string().required("Alamat tidak boleh kosong"),
     kota: Yup.string().required("Kota event tidak boleh kosong"),
   });
 
   const handleSubmitEvent = (data) =>{
-    console.log(data);
+    console.log('ini data', data);
   }
 
   const formik = useFormik({
     initialValues: {
-      namaEvent: "",
-      formatEvent: "",
-      topikEvent: "",
-      jenisEvent: "Berbayar",
+      nama_event: "",
+      format_event: "",
+      penyelenggara: user.name,
+      topik_event: "",
+      jenis_event: "Berbayar",
       tanggalMulai: "",
       tanggalBerakhir: "",
       waktuMulai: "",
@@ -132,16 +135,26 @@ export default function RegisterEventForm() {
               <Heading size={'lg'}>Buat event</Heading>
               <FormControl>
                 <FormLabel>Nama Event<span style={{ color: 'red' }}>*</span></FormLabel>
-                 <StyledInput id='namaEvent' name='namaEvent' onChange={formik.handleChange} value={formik.values.namaEvent} autoComplete='off' maxLength={60} fontSize={'lg'} transition={'0.2s ease-in-out'} variant={'unstyled'} type="text" placeholder='Tentukan nama event anda'
+                 <StyledInput id='nama_event' name='nama_event' onChange={formik.handleChange} value={formik.values.nama_event} autoComplete='off' maxLength={60} fontSize={'lg'} transition={'0.2s ease-in-out'} variant={'unstyled'} type="text" placeholder='Tentukan nama event anda'
                 _focus={{
                   fontSize: '2xl', // Set the desired font size for focus
                   transition: 'font-size 0.2s ease-in-out',
                 }}
-                error={formik.touched.namaEvent && Boolean(formik.errors.namaEvent)}
+                error={formik.touched.nama_event && Boolean(formik.errors.nama_event)}
                 />
-                {formik.touched.namaEvent && formik.errors.namaEvent ?(
-                  <Text style={{color: 'red'}}>{formik.errors.namaEvent}</Text>
+                {formik.touched.nama_event && formik.errors.nama_event ?(
+                  <Text style={{color: 'red'}}>{formik.errors.nama_event}</Text>
                 ) : null}
+              </FormControl>
+              <FormControl>
+                <FormLabel>Diselenggarakan oleh</FormLabel>
+                <StyledInput name='penyelenggara' onChange={formik.handleChange} value={formik.values.penyelenggara} autoComplete='off' maxLength={60} fontSize={'lg'} transition={'0.2s ease-in-out'} variant={'unstyled'} type="text" placeholder={user.name}
+                _focus={{
+                  fontSize: '2xl', // Set the desired font size for focus
+                  transition: 'font-size 0.2s ease-in-out',
+                }}
+                error={formik.touched.nama_event && Boolean(formik.errors.nama_event)}
+                />
               </FormControl>
               <FormControl>
                 <FormLabel>Gambar Event</FormLabel>
@@ -155,8 +168,8 @@ export default function RegisterEventForm() {
                   {selectedCategoryValues ? (<>{selectedCategoryValues} <EditIcon ml={'8px'}/></>) 
                   :
                    <>
-                   {formik.touched.formatEvent && formik.errors.formatEvent ?(
-                  <><Text style={{color: 'red'}}>{formik.errors.formatEvent}</Text><EditIcon ml={'8px'}/></>
+                   {formik.touched.format_event && formik.errors.format_event ?(
+                  <><Text style={{color: 'red'}}>{formik.errors.format_event}</Text><EditIcon ml={'8px'}/></>
                 ) : <><MdEventNote/> <Text ml={'8px'}>Kategori</Text></>}
                    {/* <MdEventNote/> <Text ml={'8px'}>Kategori</Text> */}
                    </>}

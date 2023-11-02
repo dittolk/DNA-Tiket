@@ -51,12 +51,12 @@ function CategoryModal({ isOpen, onClose, formik, overlay }) {
 
   const options = ['Berbayar', 'Gratis']
   const handleRadioChange = (value) => {
-    formik.handleChange('jenisEvent')(value);
+    formik.handleChange('jenis_event')(value);
     setRadio(value);
   };
 
   const { getRadioProps } = useRadioGroup({
-    name: 'jenisEvent',
+    name: 'jenis_event',
     defaultValue: 'Berbayar',
     onChange: handleRadioChange,
   })
@@ -110,7 +110,7 @@ function CategoryModal({ isOpen, onClose, formik, overlay }) {
 
   
   const handleSimpanKategori = () => {
-    if(formik.values.topikEvent){
+    if(formik.values.topik_event){
       const categoryValues = `${category} > ${topic} > ${radio === 'Berbayar' ? 'Berbayar' : 'Gratis'}`;
       onClose(categoryValues, radio)
       
@@ -142,9 +142,9 @@ function CategoryModal({ isOpen, onClose, formik, overlay }) {
             <ModalBody pb={6}>
               <FormControl>
                 <FormLabel>Format</FormLabel>
-                  <Select name="formatEvent" value={formik.values.formatEvent} onChange={(e) => {
+                  <Select name="format_event" value={formik.values.formatEvent} onChange={(e) => {
                     setCategory(e.target.value);
-                    formik.setFieldValue("formatEvent", e.target.value);
+                    formik.setFieldValue("format_event", e.target.value);
                     
                   }} defaultValue=''>
                     <option value="" disabled hidden>Pilih kategori event</option>
@@ -158,9 +158,9 @@ function CategoryModal({ isOpen, onClose, formik, overlay }) {
 
                 <FormControl mt={4}>
                 <FormLabel>Topik</FormLabel>
-                  <Select name="topikEvent" value={formik.values.topikEvent} onChange={(e) => {
+                  <Select name="topik_event" value={formik.values.topik_event} onChange={(e) => {
                       setTopic(e.target.value);
-                      formik.setFieldValue("topikEvent", e.target.value);
+                      formik.setFieldValue("topik_event", e.target.value);
                     }} defaultValue=''>
                       <option value='' disabled hidden>Pilih topik event</option>
                       {eventTopic.map((item, index) => (
