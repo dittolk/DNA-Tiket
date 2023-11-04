@@ -13,6 +13,7 @@ import { setData } from "./redux/userSlice";
 import Profile from "./components/profile";
 import { TransaksiPage } from "./pages/TransaksiPage";
 import { PersonalPage } from "./pages/PersonalPage";
+import { PromoPage } from "./pages/PromotionPage";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home></Home> },
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: "/register_event", element: <RegisterEvent></RegisterEvent> },
       { path: "/transaksi/:id", element: <TransaksiPage></TransaksiPage> },
       { path: "/transaksi/personal", element: <PersonalPage></PersonalPage> },
+      { path: "/promo", element: <PromoPage /> },
     ],
   },
 ]);

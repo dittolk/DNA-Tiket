@@ -1,6 +1,7 @@
-import { Button, Input, Flex, Text, Stack, Card, CardHeader, CardBody, Heading, Box, StackDivider, Spacer, Center, Link } from "@chakra-ui/react";
+import { Button, Input, Flex, Text, Stack, Card, CardHeader, CardBody, Heading, Box, StackDivider, Spacer, Center } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
-export const DetailTransaksi = ({counter, eventList}) => {
+export const DetailTransaksi = ({ counter, eventList }) => {
   return (
     <Box width="100%" height="auto" margin="auto" boxShadow="base" borderRadius="10px">
       <Center maxWidth="100%">
@@ -9,9 +10,9 @@ export const DetailTransaksi = ({counter, eventList}) => {
           Submit
         </Button>
       </Center>
-      <Link display="flex" justifyContent="center" marginTop="5px" color="blue.400">
-        Dapatkan Kode Promo disini!
-      </Link>
+      <Box display="flex" justifyContent="center" alignItems="center" marginTop="5px" color="blue.400">
+        <Link to="/promo">Dapatkan Kode Promo disini!</Link>
+      </Box>
       <Card marginTop="10px">
         <CardHeader>
           <Heading size="md">Detail Harga</Heading>
