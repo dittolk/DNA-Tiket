@@ -9,7 +9,11 @@ import NavBar from "../components/navbar";
 export const TransaksiPage = () => {
   const [total, setTotal] = useState();
   const [counter, setCounter] = useState(1);
+
   const params = useParams();
+
+  const params = useParams()
+
   const eventList = {
     id: 1,
     eventName: "Event 1",
@@ -20,9 +24,11 @@ export const TransaksiPage = () => {
 
   return (
     <Box>
+
       <Box mb="10">
         <NavBar />
       </Box>
+
       <Box>
         <Flex width="90%" margin="auto">
           <DetailEvent />
