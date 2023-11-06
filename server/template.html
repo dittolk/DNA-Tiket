@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Konfirmasi</title>
+  </head>
+  <body>
+    <div class="container" style="text-align: center">
+      <div class="header" style="display: inline-block">
+        <img src="https://raw.githubusercontent.com/amanhidayat/BackEnd/day-10/tugas1.png" alt="DNA Tiket" width="110px" height="110px" />
+        
+        <h2>Halo <span style="color: rgb(16, 69, 181)">{{name}}</span>.</h2>
+        <h2>
+            Selamat akun
+            <span style="color: rgb(16, 69, 181)">{{username}}</span> telah
+            terdaftar
+        </h2>
+    </div>
+    
+    <div class="content" style="text-align: center">
+        <h3>Akun anda sudah bisa digunakan</h3>
+        <h6>TANGGAL {{createdAt}}</h6>
+        <a
+            class="button"
+            href="http://localhost:3000/login_user"
+            style="background: linear-gradient(to right, #000000, rgb(16, 69, 181));
+                color: rgb(255, 250, 250);
+                padding: 20px 100px;
+                border-radius: 30px;
+                text-decoration: none; 
+                display: inline-block; 
+                margin: 40px 0; 
+            "
+        >MASUK</a>
+    </div>
+    </div>
+  </body>
+</html>

@@ -5,6 +5,9 @@ const Wallet = db.Wallet
 const { Op } = require('sequelize')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const transporter = require('../middleware/transporter')
+const fs = require('fs')
+const handlebars = require('handlebars')
 
 module.exports = {
     registerUser: async (req, res) => {
@@ -77,6 +80,18 @@ module.exports = {
                         await User.increment('point', { by: 10, where:{id: findReferral.UserId} })          
                     }
                 }
+
+                const data = fs.readFileSync("./template.html", "utf-8");
+                const tempCompile = await handlebars.compile(data);
+                const tempResult = tempCompile({ createdAt: result.createdAt, name: name, username: username }) ;
+        
+                await transporter.sendMail({
+                  from: "vaditto@protonmail.com",
+                  to: email,
+                  subject: "Email Confirmation",
+                  html: tempResult,
+                });
+
             }else{
                 res.send(400).send("User already exist")
             }
