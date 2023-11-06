@@ -12,27 +12,42 @@ module.exports = (sequelize, DataTypes) => {
       Transaksi.belongsTo(models.User);
       Transaksi.belongsTo(models.Event);
       Transaksi.hasOne(models.Tiket);
-      Transaksi.belongsTo(models.Payment_Method);
       Transaksi.belongsTo(models.Promosi);
     }
   }
   Transaksi.init(
     {
-      cust_name: {
+      nama_lengkap: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      cust_email: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      cust_telp: {
+      telp: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      total_harga_tiket: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      biaya_layanan: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      diskon: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
       total_bayar: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+      },
+      metode_pembayaran: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     {
