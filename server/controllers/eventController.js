@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 const db = require('../models')
 const Event = db.Event
 const Tiket = db.Tiket
@@ -153,4 +151,3 @@ module.exports = {
         }
     }
 }
->>>>>>> Stashed changes

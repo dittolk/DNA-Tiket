@@ -40,7 +40,6 @@ function DateModal({isOpen, onClose, formik, overlay}){
         isCentered
       >
         {overlay}
-        <form onSubmit={formik.handleSubmit}>
           <ModalContent>
             <ModalHeader>Tanggal & Waktu</ModalHeader>
             <ModalCloseButton />
@@ -60,21 +59,21 @@ function DateModal({isOpen, onClose, formik, overlay}){
                   <TabPanel>
                     <FormControl>
                     <FormLabel>Tanggal Mulai</FormLabel>
-                      <Input value={formik.values.tanggalMulai}  onChange={(e) => {formik.setFieldValue("tanggalMulai", e.target.value); setStartDate(e.target.value)}} placeholder="Select Date and Time" size="md" type="date"/>
+                      <Input value={formik.values.tanggal_mulai}  onChange={(e) => {formik.setFieldValue("tanggal_mulai", e.target.value); setStartDate(e.target.value)}} placeholder="Select Date and Time" size="md" type="date"/>
                     </FormControl>
                     <FormControl>
                       <FormLabel>Tanggal Berakhir</FormLabel>
-                        <Input value={formik.values.tanggalBerakhir} onChange={(e) => {formik.setFieldValue("tanggalBerakhir", e.target.value); setEndDate(e.target.value)}} placeholder="Select Date and Time" size="md" type="date"/>
+                        <Input value={formik.values.tanggal_berakhir} onChange={(e) => {formik.setFieldValue("tanggal_berakhir", e.target.value); setEndDate(e.target.value)}} placeholder="Select Date and Time" size="md" type="date"/>
                     </FormControl>
                   </TabPanel>
                   <TabPanel>
                     <FormControl>
                       <FormLabel>Waktu Mulai</FormLabel>
-                        <Input value={formik.values.waktuMulai} onChange={(e) => {formik.setFieldValue("waktuMulai", e.target.value); setStartTime(e.target.value)}} placeholder="Select Date and Time" size="md" type="time"/>
+                        <Input value={formik.values.waktu_mulai} onChange={(e) => {formik.setFieldValue("waktu_mulai", e.target.value); setStartTime(e.target.value)}} placeholder="Select Date and Time" size="md" type="time"/>
                       </FormControl>
                       <FormControl>
                         <FormLabel>Waktu Berakhir</FormLabel>
-                          <Input value={formik.values.waktuBerakhir} onChange={(e) =>{formik.setFieldValue("waktuBerakhir", e.target.value); setEndTime(e.target.value)}} placeholder="Select Date and Time" size="md" type="time"/>
+                          <Input value={formik.values.waktu_berakhir} onChange={(e) =>{formik.setFieldValue("waktu_berakhir", e.target.value); setEndTime(e.target.value)}} placeholder="Select Date and Time" size="md" type="time"/>
                       </FormControl>
                   </TabPanel>
                 </TabPanels>
@@ -90,7 +89,6 @@ function DateModal({isOpen, onClose, formik, overlay}){
               </Button>
             </ModalFooter>
           </ModalContent>
-        </form>
       </Modal>
     )
 }

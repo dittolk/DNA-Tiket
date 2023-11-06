@@ -1,4 +1,5 @@
-import { FormControl, FormLabel, Input, FormHelperText, InputGroup, Heading } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, FormHelperText, InputGroup, Heading, InputLeftElement } from "@chakra-ui/react";
+import { PhoneIcon } from "@chakra-ui/icons";
 
 export const Personal = ({ formData, setFormData }) => {
   return (
@@ -26,6 +27,9 @@ export const Personal = ({ formData, setFormData }) => {
           No Ponsel
         </FormLabel>
         <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <PhoneIcon color="gray.300" />
+          </InputLeftElement>
           <Input id="tel" type="tel" placeholder="phone number" variant="flushed" size="md" value={formData.tel} onChange={(event) => setFormData({ ...formData, tel: event.target.value })} />
         </InputGroup>
       </FormControl>

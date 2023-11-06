@@ -28,7 +28,7 @@ function Home() {
         <NavBar></NavBar>
         <Carousel></Carousel>
         <EventContentRecent></EventContentRecent>
-        <EventContentPopular></EventContentPopular>
+        {/* <EventContentPopular></EventContentPopular> */}
         <Footer></Footer>
         </>
     )

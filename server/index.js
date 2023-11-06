@@ -7,8 +7,9 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-const {userRouter} = require('./routers')
+const {userRouter, eventRouter} = require('./routers')
 app.use('/user', userRouter)
+app.use('/event', eventRouter)
 
 app.listen(PORT, () => {
     //sync on off

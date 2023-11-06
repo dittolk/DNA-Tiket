@@ -1,4 +1,4 @@
-import { Button, Text } from "@chakra-ui/react";
+import { Button, Flex, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import NavBar from "../components/navbar";
@@ -7,12 +7,13 @@ import Footer from "../components/footer";
 
 function Dashboard() {
     const user = useSelector((state) => state.user.value);
-    console.log("Ini data redux", user);
 
     return(
-        <>
+        <>  
             <NavBar></NavBar>
-            <Profile></Profile>
+            <Flex direction={'row'} w={'100%'} justifyContent={'center'} p={6}>
+                <Profile></Profile>
+            </Flex>
         </>
     )
 }

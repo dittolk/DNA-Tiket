@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Referral.init(
     {
-      kode_referal: DataTypes.STRING,
+      kode_referral: DataTypes.STRING,
     },
     {
       sequelize,

@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import loginimage from "../asset/tugas1.png";
+import loginimage from "../asset/logreglogo.png";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -26,28 +26,28 @@ import { Link, useNavigate} from "react-router-dom";
 
 function RegisterUser() {
   const RegisterSchema = Yup.object().shape({
-    name: Yup.string().required("Name is required"),
-    username: Yup.string().required("Username is required"),
+    name: Yup.string().required("Nama tidak boleh kosong"),
+    username: Yup.string().required("Username tidak boleh kosong"),
     email: Yup.string()
-      .email("Invalid address format")
-      .required("Email is required"),
+      .email("Format email salah")
+      .required("Email tidak boleh kosong"),
     password: Yup.string()
-      .min(3, "Password must be 3 characters at minimum")
-      .required("Password is required"),
+      .min(3, "Password minimal 3 karakter")
+      .required("Password tidak boleh kosong"),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match") // Validasi konfirmasi password
-      .required("Confirm Password is required"),
+      .oneOf([Yup.ref("password"), null], "Password harus sama dengan konfirmasi password") // Validasi konfirmasi password
+      .required("Confirm Password tidak boleh kosong"),
   });
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const toast = useToast();
+  const navigate = useNavigate();
   
   const handleSubmitRegister = async (data) => {
-    console.log(data);
-    
     try {
       const response = await axios.post("http://localhost:2000/user/register-user", data);
+      console.log("ini data", data);
       toast({
         title: "Akun Telah Dibuat",
         description: "Anda sekarang dapat menggunakan akun Anda.",
@@ -55,6 +55,7 @@ function RegisterUser() {
         duration: 9000,
         isClosable: true,
       });
+      navigate('/login_user')
     } catch (err) {
       console.log(err);
     }
@@ -80,7 +81,7 @@ function RegisterUser() {
           </Stack>
 
           <Formik
-            initialValues={{ name: "", username: "", email: "", password: "" }}
+            initialValues={{ name: "", username: "", email: "", password: "", kode_referral:""}}
             validationSchema={RegisterSchema}
             onSubmit={(values, action) => {
               handleSubmitRegister(values);
@@ -92,7 +93,6 @@ function RegisterUser() {
                 <Form>
                   <Box
                     rounded={"lg"}
-                    // bg={useColorModeValue("white", "gray.700")}
                     boxShadow={"lg"}
                     p={8}
                   >
@@ -106,7 +106,7 @@ function RegisterUser() {
                                 {...field}
                                 type="text"
                                 placeholder="Nama Lengkap"
-                                autoComplete="off"
+                                autoComplete="new"
                               />
                             )}
                           </Field>
@@ -146,7 +146,7 @@ function RegisterUser() {
                               {...field}
                               type="email"
                               placeholder="Email"
-                              autoComplete="off"
+                              autoComplete="new"
                             />
                           )}
                         </Field>
@@ -226,7 +226,7 @@ function RegisterUser() {
                       <Box>
                         <FormControl id="Kode Referral">
                           <FormLabel>Kode Referral</FormLabel>
-                          <Field name="kode_Referral">
+                          <Field name="kode_referral">
                             {({ field }) => (
                               <Input
                                 {...field}

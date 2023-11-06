@@ -16,7 +16,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Tiket.init({
-    harga_tiket: DataTypes.INTEGER
+    harga_tiket: DataTypes.INTEGER,
+    kuota: DataTypes.INTEGER,
+    tanggal_akhir: DataTypes.DATEONLY,
+    jumlah_tiket: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Tiket',
