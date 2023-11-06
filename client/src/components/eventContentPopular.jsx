@@ -18,7 +18,7 @@ export default function EventContentPopular() {
       </Center>
 
       <Flex py={6} overflowX={{ base: "scroll", md: "scroll", lg : "scroll", xl: "hidden" }} justifyContent={{ base: null, md: "center" }}>
-        <EventCard></EventCard>
+        {/* <EventCard></EventCard> */}
       </Flex>
     
     </Flex>

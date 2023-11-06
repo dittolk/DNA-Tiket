@@ -12,7 +12,7 @@ import {
   Image,
   useToast,
 } from "@chakra-ui/react";
-import loginimage from "../asset/tugas1.png";
+import loginimage from "../asset/logreglogo.png";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -23,17 +23,25 @@ import { useState } from "react";
 
 export default function LoginUser() {
   const LoginSchema = Yup.object().shape({
-    // email: Yup.string()
-    //   .email("Invalid address format")
-    //   .required("Email is required"),
     password: Yup.string()
-      .min(3, "Password must be 3 characters at minimum")
-      .required("Password is required"),
+      .min(3, "Password minimal 3 karakter")
+      .required("Password tidak boleh kosong"),
   });
 
   const toast = useToast();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  function fail(){
+    toast({
+      title: "Sorry",
+      description: "Email atau Password salah, silahkan coba lagi",
+      status: "error",
+      duration: 5000,
+      isClosable: true,
+      position: "top",
+    });
+  }
 
   const handleSubmitLogin = async (data) => {
     try {
@@ -45,17 +53,9 @@ export default function LoginUser() {
             dispatch(setData(response.data.userLogin));
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("fr-login", "fr-login");
-            navigate('/');
-            // window.location.reload();
+            navigate('/');            
           } else {
-            toast({
-              title: "Sorry",
-              description: "Email or Password is wrong. Please try again.",
-              status: "error",
-              duration: 5000,
-              isClosable: true,
-              position: "top",
-            });
+            fail()
           }
         } else {
           data.username = data.data_input
@@ -64,29 +64,15 @@ export default function LoginUser() {
           if (response.data.token) {
             dispatch(setData(response.data.userLogin));
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("fr-login", "fr-login");
             navigate('/');
-            // window.location.reload();
           } else {
-            toast({
-              title: "Sorry",
-              description: "Email or Password is wrong. Please try again.",
-              status: "error",
-              duration: 5000,
-              isClosable: true,
-              position: "top",
-            });
+            fail()
           }
         }
     }catch(err) {
       console.log(err);
-      toast({
-        title: "Login Gagal",
-        description: "Email atau password salah. Silakan coba lagi.",
-        status: "error",
-        duration: 5000, 
-        isClosable: true,
-        position: "top", 
-      });
+      fail()
     }
   };
 
@@ -134,6 +120,7 @@ export default function LoginUser() {
                                 {...field}
                                 type="text"
                                 placeholder="Email/Username"
+                                autoComplete="new"
                               />
                             )}
                           </Field>

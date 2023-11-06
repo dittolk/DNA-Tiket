@@ -18,7 +18,6 @@ import { useState } from 'react'
 function LocationModal({isOpen, onClose, formik, overlay}) {
     const toast = useToast();
     
-
     const indonesianCities = [
         'Jakarta',
         'Surabaya',
@@ -91,7 +90,7 @@ function LocationModal({isOpen, onClose, formik, overlay}) {
     setClickedSuggestion(false);
   };
 
-    // Event handler for selecting a suggestion for Kota (city)
+  // Event handler for selecting a suggestion for Kota (city)
   const handleCitySuggestionClick = (suggestion) => {
     formik.setFieldValue("kota", suggestion);
     setCity(suggestion);
@@ -100,13 +99,13 @@ function LocationModal({isOpen, onClose, formik, overlay}) {
   };
 
   const handleSimpanAddress = () => {
-    console.log("filtered", filteredCitySuggestions);
-    console.log("city", city);
-    console.log("clicked", clickedSuggestion);
+    // console.log("filtered", filteredCitySuggestions);
+    // console.log("city", city);
+    // console.log("clicked", clickedSuggestion);
 
     if(address && clickedSuggestion && filteredCitySuggestions.length === 1){
-      const str = `${address}, Kota ${filteredCitySuggestions}`
-      formik.handleChange('kota')(filteredCitySuggestions);
+      const str = `${address}, Kota ${filteredCitySuggestions[0]}`
+      formik.handleChange('kota')(filteredCitySuggestions[0]);
       onClose(str)
     }else if(address && clickedSuggestion && filteredCitySuggestions.length > 1){
       const str = `${address}, Kota ${city}`
@@ -154,7 +153,6 @@ function LocationModal({isOpen, onClose, formik, overlay}) {
         isCentered
       >
         {overlay}
-        <form onSubmit={formik.handleSubmit}>
           <ModalContent>
             <ModalHeader>Lokasi Event</ModalHeader>
             <ModalCloseButton />
@@ -191,7 +189,7 @@ function LocationModal({isOpen, onClose, formik, overlay}) {
               </Button>
             </ModalFooter>
           </ModalContent>
-        </form>
+
       </Modal>
     )
 }

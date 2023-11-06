@@ -10,6 +10,7 @@ import LoginUser from "./pages/loginUser";
 import DiscoverEvent from "./pages/discoverEvent";
 import { useEffect } from "react";
 import { setData } from "./redux/userSlice";
+import { setDataEvent } from "./redux/eventSlice";
 import Profile from "./components/profile";
 import { TransaksiPage } from "./pages/TransaksiPage";
 import { PersonalPage } from "./pages/PersonalPage";
@@ -38,7 +39,6 @@ function App() {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
 
-  console.log(token);
   const keepLogin = async () => {
     try {
       const response = await axios.get("http://localhost:2000/user/keep-login", {
@@ -46,17 +46,24 @@ function App() {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      // console.log("ini response", response);
-
       dispatch(setData(response.data.user));
     } catch (err) {
       console.log(err);
     }
   };
 
+  const getEvent = async () =>{
+    try{
+      const response = await axios.get("http://localhost:2000/event/get-event");
+      dispatch(setDataEvent(response.data.result));
+    }catch(err){
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     keepLogin();
+    getEvent();
   }, []);
 
   return (
