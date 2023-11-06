@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       deskripsi_event: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       ketentuan_event: {
         type: DataTypes.STRING,
@@ -50,6 +50,22 @@ module.exports = (sequelize, DataTypes) => {
       },
       penyelenggara: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      tanggal_mulai: {
+        type: DataTypes.DATEONLY, 
+        allowNull: false, 
+      },
+      tanggal_berakhir: {
+        type: DataTypes.DATEONLY, 
+        allowNull: false, 
+      },
+      waktu_mulai: {
+        type: DataTypes.TIME, 
+        allowNull: false, 
+      },
+      waktu_berakhir: {
+        type: DataTypes.TIME,
         allowNull: false,
       },
       image_link: {

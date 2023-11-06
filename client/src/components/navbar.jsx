@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Image, Input, useMediaQuery, HStack, InputGroup, InputLeftElement, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import navimg from "../asset/tugas2.jpg" 
+import navimg from "../asset/navlogo.jpg" 
 import { Search2Icon } from '@chakra-ui/icons'
 import { RxDashboard } from 'react-icons/rx';
 import { RiCompassDiscoverLine } from 'react-icons/ri';

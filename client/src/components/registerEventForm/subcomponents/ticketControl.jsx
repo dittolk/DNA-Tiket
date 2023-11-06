@@ -31,6 +31,7 @@ function TicketControl({formik, selectedRadioValue, setIsExceedLimit}) {
         }
     };
     return(
+
         <VStack spacing={6} divider={<StackDivider borderColor='gray.400' />} w={'full'} maxW={'xl'}>
             <FormControl>
                 <HStack spacing={5} justifyContent={'center'} divider={<StackDivider borderColor='gray.400'/>}>
@@ -39,7 +40,8 @@ function TicketControl({formik, selectedRadioValue, setIsExceedLimit}) {
                     <FormLabel>Harga Tiket</FormLabel>
                       <InputGroup>
                           <Input 
-                          defaultValue={formik.values.hargaTiket}
+                          name='harga_tiket'
+                          defaultValue={formik.values.harga_tiket}
                           color={ticketPrice>10000000 || ticketPrice<10000 ? 'red' : 'initial'}
                           as={CurrencyInput}
                           maxLength={15}
@@ -50,7 +52,7 @@ function TicketControl({formik, selectedRadioValue, setIsExceedLimit}) {
                                 setIsExceedLimit(true);
                               } else {
                                 setIsExceedLimit(false);
-                                formik.setFieldValue('hargaTiket', parseInt(value));
+                                formik.setFieldValue('harga_tiket', parseInt(value));
                               }
                             }
                           } 
@@ -92,6 +94,16 @@ function TicketControl({formik, selectedRadioValue, setIsExceedLimit}) {
                   </VStack>
                 </HStack>
               </FormControl>
+              <FormControl>
+                <VStack>
+                <HStack mt={1} alignItems={'center'} h={'auto'} w={'100%'} spacing={5} justifyContent={'center'}>
+                        <VStack align={'flex-start'} w={'100%'}>
+                          <FormLabel>Tanggal akhir penjualan </FormLabel>
+                          <Input name='akhir_penjualan' value={formik.values.akhir_penjualan} onChange={(e) => {formik.setFieldValue("akhir_penjualan", e.target.value)}} type='date' border={'1px solid black'}></Input>
+                        </VStack>
+                      </HStack>
+                </VStack>
+              </FormControl>
               
               {selectedRadioValue === 'Berbayar' && (
                 <FormControl>  
@@ -99,25 +111,26 @@ function TicketControl({formik, selectedRadioValue, setIsExceedLimit}) {
                     <HStack w={'100%'}>
                         <VStack w={'100%'} align={'flex-start'}>
                           <FormLabel>Promosi</FormLabel>
-                          <Text fontSize={'sm'}>Promosi berupa potongan harga berdasarkan rentang waktu tertentu.</Text>
+                          <Text fontSize={'sm'}>Promosi berupa potongan harga berdasarkan poin yang terpakai.</Text>
+                          <Text fontSize={'sm'}>Contoh: EV1PROMO, Poin terpakai: 200, Potongan harga: 10.000</Text>
                         </VStack>
                         <HStack justifyContent={'flex-end'}>
                           <Switch isChecked={promotionToggle} onChange={handleSwitchChange}></Switch>
                         </HStack>
                     </HStack>
                     {promotionToggle && (
-                      <HStack mt={1} alignItems={'center'} h={'auto'}>
+                      <HStack mt={1} alignItems={'center'} h={'auto'} >
                         <VStack align={'flex-start'}>
-                          <FormLabel>Tanggal mulai</FormLabel>
-                          <Input name='tanggalMulaiPromosi' value={formik.values.tanggalMulaiPromosi} onChange={formik.handleChange} type='date'></Input>
+                          <FormLabel>Kode Promosi</FormLabel>
+                          <Input name='kode_promo' values={formik.values.kode_promo} onChange={formik.handleChange} type='text' placeholder='Buat kode promosi anda' border={'1px solid black'}></Input>
                         </VStack>
                         <VStack align={'flex-start'}>
-                          <FormLabel>Tanggal berakhir</FormLabel>
-                          <Input name='tanggalBerakhirPromosi' values={formik.values.tanggalBerakhirPromosi} onChange={formik.handleChange} type='date'></Input>
+                          <FormLabel>Poin</FormLabel>
+                          <Input name='cost_point' values={formik.values.cost_point} onChange={formik.handleChange} type='number' placeholder='Tentukan poin yang terpakai' border={'1px solid black'}></Input>
                         </VStack>
                         <VStack align={'flex-start'}>
                           <FormLabel>Potongan Harga</FormLabel>
-                          <Input name='potonganHarga' values={formik.values.potonganHarga} onChange={formik.handleChange} type='number'></Input>
+                          <Input name='discount' values={formik.values.discount} onChange={formik.handleChange} type='number' placeholder='Tentukan potongan harga' border={'1px solid black'}></Input>
                         </VStack>
                       </HStack>
                     )}
