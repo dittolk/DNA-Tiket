@@ -1,29 +1,11 @@
-import { Box, Grid, GridItem, Image, Text, Flex, Heading, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Avatar } from "@chakra-ui/react";
-import { ChevronRightIcon, CalendarIcon, TimeIcon } from "@chakra-ui/icons";
+import { Box, Grid, GridItem, Image, Text, Flex, Heading, Avatar } from "@chakra-ui/react";
+import { CalendarIcon, TimeIcon } from "@chakra-ui/icons";
 import { GoLocation } from "react-icons/go";
 
 export const DetailEvent = () => {
   return (
     <Box width="100vw" height="auto" margin="auto">
-      <Flex gap="1em">
-        <Breadcrumb spacing="8px" separator={<ChevronRightIcon color="gray.500" />}>
-          <BreadcrumbItem>
-            <BreadcrumbLink color="blue.400" href="#">
-              Home
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbItem>
-            <BreadcrumbLink color="blue.400" href="#">
-              #Kategori Event
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbItem isCurrentPage>
-            <Text color="blue.400">Nama Event</Text>
-          </BreadcrumbItem>
-        </Breadcrumb>
-      </Flex>
-
-      <Grid templateColumns="repeat(3, 1fr)" gap="3">
+      <Grid templateColumns={{base: "repeat(1, 1fr)", md: "repeat(3, 1fr)" }} gap="3">
         <GridItem colSpan="2" borderRadius="10px" boxShadow="base">
           <Image
             boxSize="md"

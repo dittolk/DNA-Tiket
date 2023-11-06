@@ -10,7 +10,7 @@ export const TransaksiPage = () => {
   const [total, setTotal] = useState();
   const [counter, setCounter] = useState(1);
 
-  const params = useParams()
+  const params = useParams();
 
   const eventList = {
     id: 1,
@@ -32,11 +32,11 @@ export const TransaksiPage = () => {
         </Flex>
       </Box>
       <Box marginTop="50px">
-        <Grid templateColumns="repeat(2, 1fr)" gap={5} width="90%" margin="auto">
+        <Grid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }} gap={5} width="90%" margin="auto">
           <GridItem>
             <CategoryTiket counter={counter} setCounter={setCounter} eventList={eventList} total={total} setTotal={setTotal} />
           </GridItem>
-          <GridItem width="70%" margin="auto">
+          <GridItem width={{ base: "100%", md: "70%" }} margin="auto">
             <DetailTransaksi counter={counter} eventList={eventList} />
           </GridItem>
         </Grid>
