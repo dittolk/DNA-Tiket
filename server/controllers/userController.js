@@ -26,8 +26,6 @@ module.exports = {
                     email: email,
                     password: hashPassword,
                 })
-<<<<<<< Updated upstream
-=======
                 await Referral.create({
                     UserId: result.id,
                     kode_referral: referral
@@ -49,7 +47,6 @@ module.exports = {
                         await User.increment('point', { by: 10, where:{id: findReferral.UserId} })          
                     }
                 }
->>>>>>> Stashed changes
             }else{
                 res.send(400).send("User already exist")
             }

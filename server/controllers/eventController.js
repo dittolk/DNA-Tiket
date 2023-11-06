@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 const db = require('../models')
 const Event = db.Event
 const Tiket = db.Tiket
@@ -132,12 +130,13 @@ module.exports = {
             res.status(400).send({message: err.message})
         }
     },
-    getEventByTopic: async(req, res) => {
+    getEventById: async(req, res) => {
         try{
+            const id = req.params
             const {topik_event} = req.query
             const result = await Event.findAll({
                 where:{
-                    topik: topik_event
+                    id: id
                 },
                 include: {
                     model: Tiket,
@@ -153,4 +152,3 @@ module.exports = {
         }
     }
 }
->>>>>>> Stashed changes

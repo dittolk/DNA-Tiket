@@ -1,38 +1,23 @@
-import { Box, Heading, Text, Stack, useColorModeValue, Image, Button } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Box, Heading, Text, Stack, useColorModeValue, Image, Button, HStack, StackDivider } from "@chakra-ui/react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-export default function EventCard() {
+export default function EventCard({props}) {
   const navigate = useNavigate();
+  const token = localStorage.getItem('token')
+  const event = useSelector((state) => state.event.value)
 
   const handleBeliTiket = (id) => {
-    console.log(id);
-    navigate(`/transaksi/${id}`);
+    if(token){
+      navigate(`/transaksi/${id}`);
+    }else{
+      navigate('/login_user')
+    }
   };
-
-  const eventList = [
-    {
-      id: 1,
-      eventName: "Event 1",
-      eventStart: "27 Dec 2023",
-      ticketPrice: 50000,
-    },
-    {
-      id: 2,
-      eventName: "Event 2",
-      eventStart: "22 Nov 2023",
-      ticketPrice: 22000,
-    },
-    {
-      id: 3,
-      eventName: "Event 3",
-      eventStart: " 9 Sept 2023",
-      ticketPrice: 27000,
-    },
-  ];
 
   return (
     <>
-      {eventList.map((item, index) => (
         <Box
           maxW={{ base: "200px", md: "370px" }}
           maxH={{ base: "304px", md: "350px", lg: "405px" }}
@@ -56,29 +41,23 @@ export default function EventCard() {
               fontSize={["xs", "md", "2xl"]}
               fontFamily={"body"}
             >
-              {item.eventName}
+              {props.nama_event}
             </Heading>
             <Text color={"black"} textTransform={"uppercase"} fontWeight={800} fontSize={["xs", "sm"]} letterSpacing={1.1}>
-              {item.eventStart}
+              {props.tanggal_mulai}
             </Text>
-            <Text color={"gray.500"} fontSize={["xs", "sm"]}>
-              {item.ticketPrice}
+            <Text color={"black"} fontWeight={800} fontSize={["xs", "sm"]} letterSpacing={1.1}>
+              {props.format_event} {props.topik_event}
             </Text>
-<<<<<<< Updated upstream
-=======
             <Text as={'b'} color={"gray.500"} fontWeight={800} fontSize={["xs", "md"]}>
-              {props.jenis_event == 'Berbayar'? <>Rp.{props.Tikets[0].harga_tiket}</> : <>{props.jenis_event}</>}
-              
+              Rp. {props.Tikets[0].harga_tiket}
             </Text>
             <HStack justifyContent={'space-between'} divider={<StackDivider borderColor='gray.400' />}>
               <Text as={'b'}>Penyelenggara : {props.penyelenggara}</Text>
               <Button colorScheme="messenger" onClick={() => handleBeliTiket(props.id)}>Beli tiket</Button>
             </HStack>
->>>>>>> Stashed changes
           </Stack>
-          <Button onClick={() => handleBeliTiket(item.id)}>Beli tiket</Button>
         </Box>
-      ))}
     </>
   );
 }

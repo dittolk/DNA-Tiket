@@ -10,8 +10,6 @@ export const TransaksiPage = () => {
   const [total, setTotal] = useState();
   const [counter, setCounter] = useState(1);
 
-  const params = useParams();
-
   const params = useParams()
 
   const eventList = {
@@ -24,7 +22,6 @@ export const TransaksiPage = () => {
 
   return (
     <Box>
-
       <Box mb="10">
         <NavBar />
       </Box>
