@@ -54,10 +54,12 @@ module.exports = {
                     email: email,
                     password: hashPassword,
                 })
+
                 await Referral.create({
                     UserId: result.id,
                     kode_referral: referral
                 })
+
 
                 await Wallet.create({
                         balance: 500000,

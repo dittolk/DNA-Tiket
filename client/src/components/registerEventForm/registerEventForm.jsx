@@ -99,9 +99,11 @@ export default function RegisterEventForm() {
 
   const handleSubmitEvent = async (data) =>{
     console.log('ini data', data);
+
     if(data.jenis_event == "Gratis"){
       data.harga_tiket = 0;
     }
+
     try{
       const response = await axios.post("http://localhost:2000/event/register-event", data, {
         headers: {
