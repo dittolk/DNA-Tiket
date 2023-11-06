@@ -46,7 +46,7 @@ export const MetodePembayaran = ({ selectedPayment, setSelectedPayment }) => {
   ];
 
   const handleChange = (value) => {
-    setSelectedPayment(`Metode Pembayaran: ${value}`);
+    setSelectedPayment(`${value}`);
   };
 
   const { getRootProps, getRadioProps } = useRadioGroup({
