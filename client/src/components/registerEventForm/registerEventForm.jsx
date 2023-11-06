@@ -94,6 +94,29 @@ export default function RegisterEventForm() {
 
   const handleSubmitEvent = (data) =>{
     console.log('ini data', data);
+<<<<<<< Updated upstream
+=======
+    if(data.jenis_event == "Gratis"){
+      data.harga_tiket = 0;
+    }
+    try{
+      const response = await axios.post("http://localhost:2000/event/register-event", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast({
+        title: "Success",
+        description: "Event berhasil dibuat",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+    }catch(err){
+      console.log(err);
+    }
+>>>>>>> Stashed changes
   }
 
   const formik = useFormik({

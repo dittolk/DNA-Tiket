@@ -26,6 +26,30 @@ module.exports = {
                     email: email,
                     password: hashPassword,
                 })
+<<<<<<< Updated upstream
+=======
+                await Referral.create({
+                    UserId: result.id,
+                    kode_referral: referral
+                })
+
+                await Wallet.create({
+                        balance: 500000,
+                        UserId: result.id
+                })
+
+                if(kode_referral){
+                    const findReferral = await Referral.findOne({
+                        where:{
+                            kode_referral: kode_referral
+                        }
+                    })
+                    if(findReferral){
+                        await User.increment('point', { by: 5, where:{id: result.id} })
+                        await User.increment('point', { by: 10, where:{id: findReferral.UserId} })          
+                    }
+                }
+>>>>>>> Stashed changes
             }else{
                 res.send(400).send("User already exist")
             }
@@ -45,14 +69,24 @@ module.exports = {
                 userLogin = await User.findOne({
                     where:{
                         email: email
-                    } 
+                    },
+                    include: {
+                        model: Referral,
+                        required: true,
+                        attributes: ["kode_referral"]
+                    }
                 })
             }else{
                 const {username} = req.query;
                 userLogin = await User.findOne({
                     where:{
                         username: username
-                    } 
+                    },
+                    include: {
+                        model: Referral,
+                        required: true,
+                        attributes: ["kode_referral"]
+                    }
                 })
             }
 
@@ -89,6 +123,11 @@ module.exports = {
             const user = await User.findOne({
                 where:{
                     id: req.user.id
+                },
+                include: {
+                    model: Referral,
+                    required: true,
+                    attributes: ["kode_referral"]
                 }
             })
             console.log("USER findOne:", user);

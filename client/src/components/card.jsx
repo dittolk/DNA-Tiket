@@ -64,6 +64,17 @@ export default function EventCard() {
             <Text color={"gray.500"} fontSize={["xs", "sm"]}>
               {item.ticketPrice}
             </Text>
+<<<<<<< Updated upstream
+=======
+            <Text as={'b'} color={"gray.500"} fontWeight={800} fontSize={["xs", "md"]}>
+              {props.jenis_event == 'Berbayar'? <>Rp.{props.Tikets[0].harga_tiket}</> : <>{props.jenis_event}</>}
+              
+            </Text>
+            <HStack justifyContent={'space-between'} divider={<StackDivider borderColor='gray.400' />}>
+              <Text as={'b'}>Penyelenggara : {props.penyelenggara}</Text>
+              <Button colorScheme="messenger" onClick={() => handleBeliTiket(props.id)}>Beli tiket</Button>
+            </HStack>
+>>>>>>> Stashed changes
           </Stack>
           <Button onClick={() => handleBeliTiket(item.id)}>Beli tiket</Button>
         </Box>
