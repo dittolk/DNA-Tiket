@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       { path: "/profile", element: <Profile></Profile> },
       { path: "/register_event", element: <RegisterEvent></RegisterEvent> },
       { path: "/transaksi/:id", element: <TransaksiPage></TransaksiPage> },
-      { path: "/transaksi/personal", element: <PersonalPage></PersonalPage> },
+      { path: "/personal", element: <PersonalPage></PersonalPage> },
       { path: "/promo", element: <PromoPage /> },
     ],
   },
