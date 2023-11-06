@@ -48,9 +48,11 @@ export default function EventCard({props}) {
             </Text>
             <Text color={"black"} fontWeight={800} fontSize={["xs", "sm"]} letterSpacing={1.1}>
               {props.format_event} {props.topik_event}
-            </Text>
+
             <Text as={'b'} color={"gray.500"} fontWeight={800} fontSize={["xs", "md"]}>
-              Rp. {props.Tikets[0].harga_tiket}
+              {props.jenis_event == 'Berbayar'? <>Rp.{props.Tikets[0].harga_tiket}</> : <>{props.jenis_event}</>}
+              
+
             </Text>
             <HStack justifyContent={'space-between'} divider={<StackDivider borderColor='gray.400' />}>
               <Text as={'b'}>Penyelenggara : {props.penyelenggara}</Text>

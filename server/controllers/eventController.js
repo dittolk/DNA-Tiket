@@ -19,6 +19,7 @@ module.exports = {
             if(findEvent == null){
                 eventData.UserId = req.user.id
                 const result = await Event.create(eventData)
+
                 await Tiket.create({
                     harga_tiket: eventData.harga_tiket,
                     kuota: eventData.kuota,
@@ -64,7 +65,9 @@ module.exports = {
         try{
             const result = await Event.findAll({
                 order: [
-                    ['tanggal_mulai', 'DESC']
+
+                    ['createdAt', 'DESC']
+
                 ], // Order by the 'tanggal_mulai' column in descending order
                 include: {
                     model: Tiket,
@@ -149,4 +152,6 @@ module.exports = {
             res.status(400).send({message: err.message})
         }
     }
+
 }
+

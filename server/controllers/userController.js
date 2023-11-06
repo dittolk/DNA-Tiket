@@ -54,12 +54,14 @@ module.exports = {
                     email: email,
                     password: hashPassword,
                 })
-                    await Referral.create({
+
+                await Referral.create({
                     UserId: result.id,
                     kode_referral: referral
                 })
 
-                    await Wallet.create({
+
+                await Wallet.create({
                         balance: 500000,
                         UserId: result.id
                 })
@@ -94,14 +96,24 @@ module.exports = {
                 userLogin = await User.findOne({
                     where:{
                         email: email
-                    } 
+                    },
+                    include: {
+                        model: Referral,
+                        required: true,
+                        attributes: ["kode_referral"]
+                    }
                 })
             }else{
                 const {username} = req.query;
                 userLogin = await User.findOne({
                     where:{
                         username: username
-                    } 
+                    },
+                    include: {
+                        model: Referral,
+                        required: true,
+                        attributes: ["kode_referral"]
+                    }
                 })
             }
 
@@ -138,6 +150,11 @@ module.exports = {
             const user = await User.findOne({
                 where:{
                     id: req.user.id
+                },
+                include: {
+                    model: Referral,
+                    required: true,
+                    attributes: ["kode_referral"]
                 }
             })
             console.log("USER findOne:", user);
