@@ -1,7 +1,7 @@
-import React from 'react';
-import { Box, Text, Table, Thead, Tbody, Tr, Th, Td, TableCaption } from '@chakra-ui/react';
+import React from "react";
+import { Box, Text, Table, Thead, Tbody, Tr, Th, Td, TableCaption } from "@chakra-ui/react";
 
-export const Invoice = ({ invoiceData }) => {
+export const Invoice = ({ transaksi }) => {
   return (
     <Box p="4" borderWidth="1px" borderRadius="lg">
       <Text fontSize="2xl" fontWeight="bold" mb="4">
@@ -11,31 +11,31 @@ export const Invoice = ({ invoiceData }) => {
         <TableCaption>Detail Pembayaran</TableCaption>
         <Thead>
           <Tr>
-            <Th>Jumlah yang harus dibayar</Th>
-            <Th>Order ID</Th>
+            <Th>Nama Lengkap</Th>
+            <Th>Email</Th>
             <Th>Harga Tiket</Th>
             <Th>Discount</Th>
             <Th>Admin</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {invoiceData.items.map((item, index) => (
-            <Tr key={index}>
-              <Td>{item.name}</Td>
-              <Td>{item.quantity}</Td>
-              <Td>${item.price}</Td>
-              <Td>${item.quantity * item.price}</Td>
-            </Tr>
-          ))}
+          <Tr>
+            <Td>{transaksi.nama_lengkap}</Td>
+            <Td>{transaksi.email}</Td>
+            <Td>{transaksi.total_harga_tiket.toLocaleString("id-ID", {style:"currency", currency:"IDR"})}</Td>
+            <Td>{transaksi.diskon.toLocaleString("id-ID", {style:"currency", currency:"IDR"})}</Td>
+            <Td>{transaksi.biaya_layanan.toLocaleString("id-ID", {style:"currency", currency:"IDR"})}</Td>
+          </Tr>
         </Tbody>
       </Table>
       <Box mt="4">
         <Text fontSize="lg" fontWeight="bold">
-          Total: ${invoiceData.total}
+          Total: {transaksi.total_bayar.toLocaleString("id-ID", {style:"currency", currency:"IDR"})}
+        </Text>
+        <Text fontSize="lg" fontWeight="bold">
+          Metode Pembayaran: {transaksi.metode_pembayaran}
         </Text>
       </Box>
     </Box>
   );
 };
-
-

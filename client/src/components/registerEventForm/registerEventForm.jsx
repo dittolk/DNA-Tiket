@@ -15,6 +15,7 @@ import {
   HStack,
   VStack,
   Box,
+  useToast,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { TimeIcon, EditIcon} from '@chakra-ui/icons'
@@ -22,6 +23,7 @@ import { SlLocationPin } from 'react-icons/sl';
 import { MdEventNote } from 'react-icons/md';
 import {useFormik} from "formik";
 import * as Yup from "yup"
+import axios from "axios";
 import styled from '@emotion/styled';
 import LimitTransactionInput from './subcomponents/limitTransactionInput';
 import CategoryModal from "./subcomponents/categoryModal";
@@ -30,6 +32,7 @@ import LocationModal from './subcomponents/locationModal';
 import TabbedContent from './subcomponents/tabbedContent';
 import TicketControl from './subcomponents/ticketControl';
 import { useSelector } from 'react-redux';
+import ImageInput from './subcomponents/imageInput';
 
 const StyledInput = styled(Input)`
   font-weight: normal;
@@ -47,6 +50,8 @@ const OverlayModal = () => (
 
 export default function RegisterEventForm() {
   const user = useSelector((state) => state.user.value)
+  const token = localStorage.getItem('token')
+  const toast = useToast();
   
   //Untuk modal kategori, date, dan lokasi
   const [overlay, setOverlay] = useState(<OverlayModal />) //overlay bakcground untuk modal
@@ -84,21 +89,21 @@ export default function RegisterEventForm() {
 
   const RegisterEventSchema = Yup.object().shape({
     nama_event: Yup.string().required("Nama event tidak boleh kosong"),
-    hargaTiket: Yup.number().required('Harga tiket tidak boleh kosong').positive('Harga tiket harus positif'),
-    tanggalMulai: Yup.string().required("Jadwal Event tidak boleh kosong"),
+    harga_tiket: Yup.number().required('Harga tiket tidak boleh kosong'),
+    tanggal_mulai: Yup.string().required("Jadwal Event tidak boleh kosong"),
     format_event: Yup.string().required("Format event tidak boleh kosong"),
-    kuota: Yup.number().required('Kuota tidak boleh kosong').positive('Kuota harus positif'),
+    kuota: Yup.number().required('Kuota tidak boleh kosong'),
     alamat: Yup.string().required("Alamat tidak boleh kosong"),
     kota: Yup.string().required("Kota event tidak boleh kosong"),
   });
 
-  const handleSubmitEvent = (data) =>{
+  const handleSubmitEvent = async (data) =>{
     console.log('ini data', data);
-<<<<<<< Updated upstream
-=======
+
     if(data.jenis_event == "Gratis"){
       data.harga_tiket = 0;
     }
+
     try{
       const response = await axios.post("http://localhost:2000/event/register-event", data, {
         headers: {
@@ -116,7 +121,6 @@ export default function RegisterEventForm() {
     }catch(err){
       console.log(err);
     }
->>>>>>> Stashed changes
   }
 
   const formik = useFormik({
@@ -126,24 +130,27 @@ export default function RegisterEventForm() {
       penyelenggara: user.name,
       topik_event: "",
       jenis_event: "Berbayar",
-      tanggalMulai: "",
-      tanggalBerakhir: "",
-      waktuMulai: "",
-      waktuBerakhir: "",
+      tanggal_mulai: "",
+      tanggal_berakhir: "",
+      waktu_mulai: "",
+      waktu_berakhir: "",
       alamat: "",
       kota: "",
-      deskripsiEvent: "",
-      ketentuanEvent: "",
-      hargaTiket: 10000,
+      deskripsi_event: "",
+      ketentuan_event: "",
+      harga_tiket: 10000,
+      akhir_penjualan:"",
       promosi: 0,
-      tanggalMulaiPromosi: "",
-      tanggalBerakhirPromosi: "",
-      potonganHarga: "",
+      kode_promo: "",
+      cost_point: "",
+      discount: "",
       kuota: 1,
-      limitTransaksi: "",
+      jumlah_tiket: ticketCounter,
+      image_link: "Test"
     },
     validationSchema: RegisterEventSchema,
     onSubmit: (values, action) => {
+      console.log("ini values", values);
       handleSubmitEvent(values);
       // action.resetForm();
     },
@@ -181,7 +188,8 @@ export default function RegisterEventForm() {
               </FormControl>
               <FormControl>
                 <FormLabel>Gambar Event</FormLabel>
-                  <Input type='file' size={'md'} variant={'unstyled'} _hover={{ cursor: "pointer" }} _focus={{ outline: "none" }}></Input>
+                  {/* <Input type='file' size={'md'} variant={'unstyled'} _hover={{ cursor: "pointer" }} _focus={{ outline: "none" }}></Input> */}
+                  <ImageInput onChange={(file) => console.log("Selected file:", file)}></ImageInput>
               </FormControl>
               <FormControl>
                 <Button color={'rgb(22, 97, 255)'} variant={'link'} onClick={() => {
@@ -214,10 +222,9 @@ export default function RegisterEventForm() {
                   </VStack>) 
                   :
                   <>
-                  {formik.touched.tanggalMulai && formik.errors.tanggalMulai ?(
-                    <><Text style={{color: 'red'}}>{formik.errors.tanggalMulai}</Text><EditIcon ml={'8px'}/></>
+                  {formik.touched.tanggal_mulai && formik.errors.tanggal_mulai ?(
+                    <><Text style={{color: 'red'}}>{formik.errors.tanggal_mulai}</Text><EditIcon ml={'8px'}/></>
                   ) : <><TimeIcon/> <Text ml={'8px'}>Tanggal & Waktu</Text></>}</>
-                  //  <><TimeIcon/> <Text ml={'8px'}>Tanggal & Waktu</Text></>
                    }
                 </Button>
               </FormControl>
@@ -236,7 +243,7 @@ export default function RegisterEventForm() {
               </FormControl>
               <TabbedContent formik={formik}/>
               <TicketControl formik={formik} selectedRadioValue={selectedRadioValue} setIsExceedLimit={setIsExceedLimit}/>
-              <LimitTransactionInput value={ticketCounter} onChange={(value) => {setTicketCounter(value); formik.setFieldValue('limitTransaksi', value);}}/>
+              <LimitTransactionInput value={ticketCounter} onChange={(value) => {setTicketCounter(value); formik.setFieldValue('jumlah_tiket', parseInt(value));}}/>
               <Button type='submit' bgColor={'#020091'} isDisabled={isExceedLimit?true:false} variant={'solid'} color={'white'}
               _hover={{
                 background: '#0300dd',

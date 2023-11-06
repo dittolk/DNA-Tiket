@@ -3,20 +3,27 @@ import { Box, Button, ButtonGroup, Flex, Progress, useToast } from "@chakra-ui/r
 import { Personal } from "../components/personal/personal";
 import { MetodePembayaran } from "../components/personal/metodePembayaran";
 import { Invoice } from "../components/personal/invoice";
+import { useSelector } from "react-redux";
 
 export const PersonalPage = () => {
   const toast = useToast();
+
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
   const [formData, setFormData] = useState({});
   const [selectedPayment, setSelectedPayment] = useState({});
-  const invoiceData = {
-    items: [
-      { name: "Product A", quantity: 2, price: 50 },
-      { name: "Product B", quantity: 1, price: 30 },
-      { name: "Product C", quantity: 3, price: 20 },
-    ],
-    total: 230,
+
+  const data = useSelector((state) => state.transaksi.value);
+
+  const transaksi = {
+    total_harga_tiket: data.total_harga_tiket,
+    biaya_layanan: data.biaya_layanan,
+    diskon: data.diskon,
+    total_bayar: data.total_bayar,
+    nama_lengkap: formData.namalengkap,
+    email: formData.email,
+    telp: formData.tel,
+    metode_pembayaran: selectedPayment,
   };
 
   const PageDisplay = () => {
@@ -25,7 +32,7 @@ export const PersonalPage = () => {
     } else if (step === 2) {
       return <MetodePembayaran selectedPayment={selectedPayment} setSelectedPayment={setSelectedPayment} />;
     } else {
-      return <Invoice invoiceData={invoiceData} />;
+      return <Invoice transaksi={transaksi} />;
     }
   };
 
@@ -72,7 +79,7 @@ export const PersonalPage = () => {
               colorScheme="blue"
               variant="solid"
               onClick={() => {
-                console.log(formData, selectedPayment);
+                console.log(transaksi);
                 toast({
                   title: "Account created.",
                   description: "We've created your account for you.",

@@ -1,13 +1,29 @@
-'use client'
-
 import {
   Center,
   Flex,
   Heading,
+  Text,
 } from '@chakra-ui/react'
 import EventCard from './card'
+import { useEffect, useState } from 'react';
+import axios from "axios";
 
 export default function EventContentRecent() {
+
+  const [recentEvent, setRecentEvent] = useState([])
+
+  const getEventRecent = async () =>{
+    try{
+      const response = await axios.get("http://localhost:2000/event/recent-event");
+      setRecentEvent(response.data.result)
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getEventRecent();
+  }, []);
 
   return (
     <>
@@ -18,7 +34,9 @@ export default function EventContentRecent() {
     </Center>
     
     <Flex py={6} overflowX={{ base: "scroll", md: "scroll", lg : "scroll", xl: "hidden" }} justifyContent={{ base: null, md: "center" }}>
-      <EventCard></EventCard>
+      {recentEvent.map((item, index) =>(
+        <EventCard props={item}></EventCard>
+      ))}
     </Flex>
     </>
     

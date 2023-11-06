@@ -65,7 +65,9 @@ module.exports = {
         try{
             const result = await Event.findAll({
                 order: [
+
                     ['createdAt', 'DESC']
+
                 ], // Order by the 'tanggal_mulai' column in descending order
                 include: {
                     model: Tiket,
@@ -130,13 +132,12 @@ module.exports = {
             res.status(400).send({message: err.message})
         }
     },
-    getEventById: async(req, res) => {
+    getEventByTopic: async(req, res) => {
         try{
-            const id = req.params
             const {topik_event} = req.query
             const result = await Event.findAll({
                 where:{
-                    id: id
+                    topik: topik_event
                 },
                 include: {
                     model: Tiket,
@@ -151,4 +152,6 @@ module.exports = {
             res.status(400).send({message: err.message})
         }
     }
+
 }
+
