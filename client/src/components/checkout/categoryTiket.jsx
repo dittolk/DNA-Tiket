@@ -1,7 +1,7 @@
-import { Box, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Box, Heading, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { Tiket } from "./tiket";
 
-export const CategoryTiket = ({counter, setCounter, eventList, total, setTotal}) => {
+export const CategoryTiket = ({dataEvent, counter, setCounter, eventList, total, setTotal}) => {
   return (
     <Tabs isFitted variant="enclosed" borderRadius="10px" boxShadow="base">
       <TabList mb="1em">
@@ -10,7 +10,16 @@ export const CategoryTiket = ({counter, setCounter, eventList, total, setTotal})
       </TabList>
       <TabPanels>
         <TabPanel>
-          <Text>Detail Event</Text>
+          <VStack align={'flex-start'}>
+            <VStack align={'flex-start'}>
+              <Heading>Deskripsi Event</Heading>
+              <Text fontSize={'2xl'} overflowY={'auto'}>{dataEvent?.deskripsi_event}</Text>
+            </VStack>
+            <VStack align={'flex-start'}>
+              <Heading>Ketentuan Event</Heading>
+              <Text fontSize={'2xl'}>{dataEvent?.ketentuan_event}</Text>
+            </VStack>
+          </VStack>
         </TabPanel>
         <TabPanel>
           <Box>

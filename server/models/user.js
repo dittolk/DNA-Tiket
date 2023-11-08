@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Event);
       User.hasOne(models.Referral);
       User.hasOne(models.Wallet);
+      
     }
   }
   User.init(

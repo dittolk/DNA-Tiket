@@ -14,7 +14,7 @@ const ImageInput = ({ onChange }) => {
         <Input type="file" display="none" onChange={handleFileChange}/>
             <Button as="span" h={'auto'} w={'auto'} bgColor={'white'} _hover={{}}>
                 <Img rounded={'lg'}
-                    src="https://www.bing.com/images/blob?bcid=r6CpiFUOZ0UGdu1v8QYKdEykovIZ.....9g"
+                    src="https://pastorjess.com/uploads/8/0/0/0/80007388/shutterstock-300283754_1_orig.jpg"
                     alt="Select Image"
                     style={{
                     width: "100%",
