@@ -1,4 +1,4 @@
-import {Heading, Avatar, Box, Center, Text, Stack, Button, useColorModeValue, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalOverlay, useDisclosure, ModalCloseButton, StackDivider, Input, FormControl, FormLabel, InputGroup, InputLeftAddon, useToast,
+import {Heading, Avatar, Box, Center, Text, Stack, Button, useColorModeValue, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalOverlay, useDisclosure, ModalCloseButton, StackDivider, Input, FormControl, FormLabel, InputGroup, InputLeftAddon, useToast, HStack,
 } from '@chakra-ui/react'
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -29,6 +29,7 @@ function Profile(){
               isClosable: true,
               position: "top",
             });
+            window.location.reload();
       }catch(err){
           console.log(err);
       }
@@ -59,26 +60,36 @@ function Profile(){
           action.resetForm();
       }
   })
-  
+
+  console.log("Ini data user", user);
+
   return(
       <>
           <Box
               maxW={'520px'} w={'full'} bg={useColorModeValue('white', 'gray.900')} boxShadow={'lg'}
               rounded={'lg'} p={6} textAlign={'center'} h={'auto'}>
-              <Avatar size={'xl'} name={user.name} mb={4} pos={'relative'}
+              <Avatar size={'xl'} name={user?.name} mb={4} pos={'relative'}
               />
               <Heading fontSize={'2xl'} fontFamily={'body'}>
-              {user.name}
+              {user?.name}
               </Heading>
               <Text fontWeight={600} color={'gray.500'} mb={4}>
-              @{user.username}
+              @{user?.username}
               </Text>
               <Text fontWeight={600} color={'black'} mb={4}>
-              {user.email}
+              {user?.email}
               </Text>
-              <Text fontWeight={600} color={'black'} mb={4}>
-              Referral Code: <span style={{ color: '#020091' }}>{user.referral}</span>
-              </Text>
+              <HStack justifyContent={'center'} spacing={4}>
+                <Text fontWeight={600} color={'black'} mb={4}>
+                Referral Code: <span style={{ color: '#020091' }}>{user.Referral?.kode_referral}</span>
+                </Text>
+                <Text fontWeight={600} color={'black'} mb={4}>
+                Poin: <span style={{ color: '#020091' }}>{user?.point}</span>
+                </Text>
+                <Text fontWeight={600} color={'black'} mb={4}>
+                Balance: <span style={{ color: '#020091' }}>{user.Wallet?.balance.toLocaleString("id-ID", {style:"currency", currency:"IDR"})}</span>
+                </Text>
+              </HStack>
               <form onSubmit={formik.handleSubmit}>
                <Stack direction={'column'} divider={<StackDivider borderColor='gray.400' />} spacing={4}>
                   <FormControl>

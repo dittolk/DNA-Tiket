@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       deskripsi_event: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT('long'),
         allowNull: true,
       },
       ketentuan_event: {

@@ -112,11 +112,18 @@ module.exports = {
                     where:{
                         email: email
                     },
-                    include: {
-                        model: Referral,
-                        required: true,
-                        attributes: ["kode_referral"]
-                    }
+                    include: [
+                        {
+                            model: Referral,
+                            required: true,
+                            attributes: ["kode_referral"]
+                        },
+                        {
+                            model: Wallet,
+                            required: true,
+                            attributes: ["balance"]
+                        }
+                    ]
                 })
             }else{
                 const {username} = req.query;
@@ -124,11 +131,18 @@ module.exports = {
                     where:{
                         username: username
                     },
-                    include: {
-                        model: Referral,
-                        required: true,
-                        attributes: ["kode_referral"]
-                    }
+                    include: [
+                        {
+                            model: Referral,
+                            required: true,
+                            attributes: ["kode_referral"]
+                        },
+                        {
+                            model: Wallet,
+                            required: true,
+                            attributes: ["balance"]
+                        }
+                    ]
                 })
             }
 
@@ -166,11 +180,18 @@ module.exports = {
                 where:{
                     id: req.user.id
                 },
-                include: {
-                    model: Referral,
-                    required: true,
-                    attributes: ["kode_referral"]
-                }
+                include: [
+                    {
+                        model: Referral,
+                        required: true,
+                        attributes: ["kode_referral"]
+                    },
+                    {
+                        model: Wallet,
+                        required: true,
+                        attributes: ["balance"]
+                    }
+                ]
             })
             console.log("USER findOne:", user);
             res.status(200).send({message: "Keep login", user})

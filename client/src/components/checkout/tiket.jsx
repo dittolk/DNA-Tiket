@@ -8,7 +8,7 @@ export const Tiket = ({counter, setCounter, eventList, setTotal}) => {
   const id = 'id-toast'
  
   const tambahJumlah = () => {
-    if (counter < 5) {
+    if (counter < eventList.jumlah_tiket) {
       setCounter(counter + 1);
       setTotal(eventList.ticketPrice * (counter + 1));
 
@@ -17,7 +17,7 @@ export const Tiket = ({counter, setCounter, eventList, setTotal}) => {
         toast({
           id,
           title: 'Ooops!',
-          description: "Tiket Maksimal 5",
+          description: `Maksimal pembelian ${eventList.jumlah_tiket} tiket`,
           status: 'warning',
           duration: 2000,
           isClosable: true,
@@ -54,7 +54,7 @@ export const Tiket = ({counter, setCounter, eventList, setTotal}) => {
         <Box marginBottom="20px" marginTop="20px">
           <Text color="blue.400">
             <TimeIcon marginRight="10px" />
-            Berakhir 20 October 2023 <ChevronRightIcon /> 23:00 WIB
+            Waktu Akhir Pembelian<ChevronRightIcon /> {eventList.waktu_akhir_penjualan} 
           </Text>
           <Box position="absolute" display="block" width="2em" height="2em" background="white" borderTopLeftRadius="50%" borderBottomLeftRadius="50%" borderLeft="solid 1.5px blue" right="-0.3em" />
           <Box position="absolute" display="block" width="2em" height="2em" background="white" borderTopRightRadius="50%" borderBottomRightRadius="50%" borderRight="solid 1.5px blue" left="-0.2em" />

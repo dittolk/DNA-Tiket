@@ -9,6 +9,7 @@ module.exports = {
 
             const eventData = req.body;
             console.log("ini evenData", eventData);
+            console.log("INI REQ FILE", req.file);
 
             const findEvent = await Event.findOne({
                 where:{
@@ -18,7 +19,25 @@ module.exports = {
 
             if(findEvent == null){
                 eventData.UserId = req.user.id
-                const result = await Event.create(eventData)
+                const result = await Event.create(
+                    {
+                        nama_event: eventData.nama_event,
+                        format_event: eventData.format_event,
+                        topik_event: eventData.topik_event,
+                        jenis_event: eventData.jenis_event,
+                        deksripsi_event: eventData.deksripsi_event,
+                        ketentuan_event: eventData.ketentuan_event,
+                        alamat: eventData.alamat,
+                        kota: eventData.kota,
+                        UserId: eventData.UserId,
+                        penyelenggara: eventData.penyelenggara,
+                        tanggal_mulai: eventData.tanggal_mulai,
+                        tanggal_berakhir: eventData.tanggal_berakhir,
+                        waktu_mulai: eventData.waktu_mulai,
+                        waktu_berakhir: eventData.waktu_berakhir,
+                        image_link: req.file?.path,
+                    },
+                )
 
                 await Tiket.create({
                     harga_tiket: eventData.harga_tiket,
@@ -47,14 +66,15 @@ module.exports = {
         try{
             const result = await Event.findAll(
                 {
-                    //include tabel User
-                    include: {
-                        model: Tiket,
-                        required: true,
-                        attributes: ["harga_tiket", "kuota", "jumlah_tiket"]
-                    }
+                    include: 
+                        {
+                            model: Tiket,
+                            required: true,
+                            attributes: ["harga_tiket", "kuota", "jumlah_tiket"]
+                        },
                 }
             );
+            console.log("INI GET EVENT", result);
             res.status(200).send({result})
         }catch(err){
             console.log(err);
@@ -132,18 +152,27 @@ module.exports = {
             res.status(400).send({message: err.message})
         }
     },
-    getEventByTopic: async(req, res) => {
+    getEventById: async(req, res) => {
         try{
-            const {topik_event} = req.query
-            const result = await Event.findAll({
+            const id = req.params.id
+            console.log("ini id", id);
+            
+            const result = await Event.findOne({
                 where:{
-                    topik: topik_event
+                    id: id
                 },
-                include: {
-                    model: Tiket,
-                    required: true,
-                    attributes: ["harga_tiket", "kuota", "jumlah_tiket"]
-                },
+                include: [
+                    {
+                        model: Tiket,
+                        required: true,
+                        attributes: ["harga_tiket", "kuota", "jumlah_tiket", "tanggal_akhir"]
+                    },
+                    {
+                        model: Promosi,
+                        required: false,
+                        attributes: ["kode_promo", "cost_point", "discount"]
+                    },
+                ]
             })
             console.log(result);
             res.status(200).send({result})

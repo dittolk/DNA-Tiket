@@ -7,6 +7,7 @@ export default function EventCard({ props }) {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const event = useSelector((state) => state.event.value);
+  console.log("INI PROPS", props);
 
   const handleBeliTiket = (id) => {
     if (token) {
@@ -32,7 +33,7 @@ export default function EventCard({ props }) {
         mx={"13px"}
       >
         <Box overflow={"hidden"} h={{ base: "75px", md: "130px", lg: "180px" }} bg={"gray.100"} mt={-6} mx={-6} mb={6} pos={"relative"}>
-          <Image src={"https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3270&q=80"} fill alt="Example" />
+          <Image src={`http://localhost:2000/${props.image_link}`} fill alt="Example" />
         </Box>
         <Stack>
           <Heading

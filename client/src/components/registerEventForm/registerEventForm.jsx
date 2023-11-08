@@ -146,12 +146,36 @@ export default function RegisterEventForm() {
       discount: "",
       kuota: 1,
       jumlah_tiket: ticketCounter,
-      image_link: "Test"
+      image_link: null
     },
     validationSchema: RegisterEventSchema,
     onSubmit: (values, action) => {
-      console.log("ini values", values);
-      handleSubmitEvent(values);
+      const dataForm = new FormData();
+      dataForm.append("nama_event", values.nama_event);
+      dataForm.append("format_event", values.format_event);
+      dataForm.append("penyelenggara", values.penyelenggara);
+      dataForm.append("topik_event", values.topik_event);
+      dataForm.append("jenis_event", values.jenis_event);
+      dataForm.append("tanggal_mulai", values.tanggal_mulai);
+      dataForm.append("tanggal_berakhir", values.tanggal_berakhir);
+      dataForm.append("waktu_mulai", values.waktu_mulai);
+      dataForm.append("waktu_berakhir", values.waktu_berakhir);
+      dataForm.append("alamat", values.alamat);
+      dataForm.append("kota", values.kota);
+      dataForm.append("deskripsi_event", values.deskripsi_event);
+      dataForm.append("ketentuan_event", values.ketentuan_event);
+      dataForm.append("harga_tiket", values.harga_tiket);
+      dataForm.append("akhir_penjualan", values.akhir_penjualan);
+      dataForm.append("promosi", values.promosi);
+      dataForm.append("kode_promo", values.kode_promo);
+      dataForm.append("cost_point", values.cost_point);
+      dataForm.append("discount", values.discount);
+      dataForm.append("kuota", values.kuota);
+      dataForm.append("jumlah_tiket", values.jumlah_tiket);
+      dataForm.append("image_link", values.image_link);
+      console.log("data append", dataForm);
+      console.log("image link", values.image_link);
+      handleSubmitEvent(dataForm);
       // action.resetForm();
     },
   });
@@ -188,8 +212,8 @@ export default function RegisterEventForm() {
               </FormControl>
               <FormControl>
                 <FormLabel>Gambar Event</FormLabel>
-                  {/* <Input type='file' size={'md'} variant={'unstyled'} _hover={{ cursor: "pointer" }} _focus={{ outline: "none" }}></Input> */}
-                  <ImageInput onChange={(file) => console.log("Selected file:", file)}></ImageInput>
+                  <Input type='file' onChange={(e) => formik.setFieldValue("image_link", e.currentTarget.files[0])} size={'md'} variant={'unstyled'} _hover={{ cursor: "pointer" }} _focus={{ outline: "none" }}></Input>
+                  {/* <ImageInput onChange={(file) => console.log("Selected file:", file)}></ImageInput> */}
               </FormControl>
               <FormControl>
                 <Button color={'rgb(22, 97, 255)'} variant={'link'} onClick={() => {

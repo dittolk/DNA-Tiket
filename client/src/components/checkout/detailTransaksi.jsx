@@ -1,17 +1,22 @@
-import { Button, Input, Flex, Text, Stack, Card, CardHeader, CardBody, Heading, Box, StackDivider, Spacer, Center} from "@chakra-ui/react";
+import { Button, Input, Flex, Text, Stack, Card, CardHeader, CardBody, Heading, Box, StackDivider, Spacer, Center, VStack} from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { setData } from "../../redux/transaksiSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-export const DetailTransaksi = ({ counter, eventList }) => {
+export const DetailTransaksi = ({ counter, eventList, promo }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const eventId = eventList.id;
   const total_harga_tiket = eventList.ticketPrice * counter;
   const biaya_layanan = eventList.ticketPrice * counter * 0.1;
-  const diskon = 10000;
+  // const diskon = 0;
+  const [diskon, setDiskon] = useState(0)
   const total_bayar = total_harga_tiket - diskon + biaya_layanan;
+  console.log("ini diskon", diskon);
 
   const checkout = {
+    EventId : eventId,
     total_harga_tiket: total_harga_tiket,
     biaya_layanan: biaya_layanan,
     diskon: diskon,
@@ -23,17 +28,30 @@ export const DetailTransaksi = ({ counter, eventList }) => {
     navigate("/personal");
   };
 
+  const handleButtonPromosi = () => {
+    setDiskon(promo.discount)
+  }
+
   return (
     <Box width="100%" height="auto" margin="auto" boxShadow="base" borderRadius="10px">
       <Center maxWidth="100%">
-        <Input placeholder="Masukan Kode Promo" maxWidth="65%" marginRight="10px" marginTop="10px"></Input>
-        <Button maxWidth="30%" marginTop="10px" colorScheme="blue" variant="outline">
-          Submit
-        </Button>
+        {promo.kode_promo?
+        <>
+        <VStack>
+          <Text>Promo tersedia</Text>
+          <Button colorScheme="whatsapp" onClick={() => handleButtonPromosi()}>{promo.kode_promo}</Button>
+        </VStack>
+        </>
+          :
+        <>
+        <VStack>
+          <Text>Tidak ada promo tersedia</Text>
+          <Box display="flex" justifyContent="center" alignItems="center" marginTop="5px" color="blue.400">
+            <Link to="/promo">Dapatkan Kode Promo disini!</Link>
+          </Box>
+        </VStack>
+        </>}
       </Center>
-      <Box display="flex" justifyContent="center" alignItems="center" marginTop="5px" color="blue.400">
-        <Link to="/promo">Dapatkan Kode Promo disini!</Link>
-      </Box>
       <Card marginTop="10px">
         <CardHeader>
           <Heading size="md">Detail Harga</Heading>
@@ -46,16 +64,16 @@ export const DetailTransaksi = ({ counter, eventList }) => {
               </Text>
               <Spacer />
               <Text pt="2" fontSize="sm">
-                {total_harga_tiket}
+                {total_harga_tiket.toLocaleString("id-ID", {style:"currency", currency:"IDR"})}
               </Text>
-            </Flex>
+</Flex>
             <Flex>
               <Text pt="2" fontSize="sm">
                 Biaya Layanan
               </Text>
               <Spacer />
               <Text pt="2" fontSize="sm">
-                {biaya_layanan}
+                {biaya_layanan.toLocaleString("id-ID", {style:"currency", currency:"IDR"})}
               </Text>
             </Flex>
             <Flex>
@@ -64,7 +82,7 @@ export const DetailTransaksi = ({ counter, eventList }) => {
               </Text>
               <Spacer />
               <Text pt="2" fontSize="sm">
-                {diskon}
+                {diskon.toLocaleString("id-ID", {style:"currency", currency:"IDR"})}
               </Text>
             </Flex>
             <Flex>
@@ -73,7 +91,7 @@ export const DetailTransaksi = ({ counter, eventList }) => {
               </Heading>
               <Spacer />
               <Text pt="2" fontSize="sm">
-                {total_bayar}
+                {total_bayar.toLocaleString("id-ID", {style:"currency", currency:"IDR"})}
               </Text>
             </Flex>
           </Stack>
